@@ -8,31 +8,24 @@ Original file is located at
 """
 
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from fastapi.middleware.cors import CORSMiddleware
 from recommender import ContentBasedRecommender
 import os
 
 app = FastAPI(title="Sistema de Recomendação de Filmes")
 
-# CORS (para permitir que HTML com JS chame a API)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Servir a interface index.html
+app.mount("/static", StaticFiles(directory="."), name="static")
 
-# Caminho para o CSV
+@app.get("/", include_in_schema=False)
+def root():
+    return FileResponse("index.html")
+
+# Recomendação
 caminho_csv = os.path.join(os.path.dirname(__file__), 'imdb_top_1000.csv')
 recommender = ContentBasedRecommender(caminho_csv)
 
-# Endpoint principal da interface
-@app.get("/")
-def serve_index():
-    return FileResponse("index.html")
-
-# Endpoint da recomendação
 @app.get("/recomendar/{titulo}")
 def recomendar_filmes(titulo: str):
     recomendacoes = recommender.recommend(titulo)
