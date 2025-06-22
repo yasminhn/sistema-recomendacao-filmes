@@ -6,41 +6,42 @@ Este projeto implementa um sistema de recomendação baseado em conteúdo, utili
 
 ## 📌 Funcionalidades
 
-- ✅ Recomendação de filmes com base em similaridade de conteúdo (gênero + descrição)
-- ✅ API REST criada com FastAPI
-- ✅ Interface automática de documentação com Swagger
-- ✅ Containerização com Docker
-- ✅ Dataset real com os 1000 melhores filmes do IMDb
+- ✅ Recomendação de filmes com base em similaridade de conteúdo (gênero + sinopse)  
+- ✅ API REST desenvolvida com FastAPI  
+- ✅ Interface automática de documentação com Swagger (em `/docs`)  
+- ✅ Containerização com Docker  
+- ✅ Utilização de um dataset real com os 1000 melhores filmes do IMDb  
 
 ---
 
 ## 🧠 Modelo de Recomendação
 
-Este sistema utiliza **filtragem baseada em conteúdo**, combinando os campos `Genre` e `Overview` do dataset. Os passos principais são:
+O sistema utiliza **filtragem baseada em conteúdo**, combinando os campos **Genre** e **Overview**. Os principais passos são:
 
-1. Pré-processamento textual com TF-IDF (ignora stopwords)
-2. Cálculo de similaridade usando cosseno (`cosine_similarity`)
-3. Retorno dos filmes mais semelhantes ao título consultado
+1. Pré-processamento textual com **TF-IDF**, ignorando *stopwords*  
+2. Cálculo da similaridade usando **cosine similarity**  
+3. Retorno dos filmes mais semelhantes ao título consultado  
 
 ---
 
 ## 🗂 Dataset
 
-O projeto utiliza o arquivo `imdb_top_1000.csv`, que contém informações como:
+O projeto utiliza o arquivo `imdb_top_1000.csv`, contendo informações como:
 
-- Título do filme
-- Gêneros
-- Sinopse (overview)
-- Avaliações (não utilizadas no modelo atual)
+- 🎞 Título do filme  
+- 🎭 Gêneros  
+- 📄 Sinopse (Overview)  
+- ⭐ Avaliações (não utilizadas no modelo atual)
 
-O CSV deve estar na pasta `app/` com o nome exato: `imdb_top_1000.csv`.
+> ⚠️ O arquivo CSV deve estar no diretório raiz do projeto com o nome exato: `imdb_top_1000.csv`
 
 ---
 
-## ⚙️ Como executar localmente
+## ⚙️ Como executar localmente (usando Docker)
 
 1. Clone o repositório:
-
 ```bash
 git clone https://github.com/yasminhn/sistema-recomendacao-filmes.git
 cd sistema-recomendacao-filmes
+
+
