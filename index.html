@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Recomendador de Filmes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
+            padding: 40px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #1e1e1e;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎬 Sistema de Recomendação de Filmes</h1>
+    <p>Digite o nome de um filme e veja recomendações semelhantes!</p>
+
+    <input type="text" id="filmeInput" placeholder="Ex: The Godfather" />
+    <button onclick="buscarRecomendacoes()">Buscar</button>
+
+    <h2>Recomendações:</h2>
+    <ul id="resultado"></ul>
+
+    <script>
+        async function buscarRecomendacoes() {
+            const titulo = document.getElementById('filmeInput').value;
+            const resposta = await fetch(`/recomendar/${encodeURIComponent(titulo)}`);
+
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = '';
+
+            if (resposta.ok) {
+                const dados = await resposta.json();
+                dados.recomendados.forEach(filme => {
+                    const li = document.createElement('li');
+                    li.textContent = filme;
+                    resultadoDiv.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'Filme não encontrado ou erro na API.';
+                resultadoDiv.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
